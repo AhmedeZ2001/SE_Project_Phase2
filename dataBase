@@ -16,7 +16,7 @@ public class dataBase {
     ArrayList<driver> drivers_List=new ArrayList<>();
     ArrayList<driver> pendingDrivers=new ArrayList<>();
     ArrayList<String> favArea_List=new ArrayList<>();
-    //HashMap<String,rate> rating_List=new HashMap<>();
+    HashMap<String,rate> rating_List=new HashMap<>();
     private dataBase(){};
      public static dataBase getInstance ()
     {
