@@ -19,6 +19,7 @@ public class client extends User implements Register, Login {
     
     public void request (String src, String des)
     {
+        //check if client exist in client list
         boolean x = true;
         for (int i =0 ; i< dataBase.getInstance().clients_List.size(); i++)
         {
