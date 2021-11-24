@@ -17,7 +17,7 @@ package se;
 public class Admin extends User {
     
     
-    private static Admin admin = null;
+    private static Admin admin = null;//Singleton
 
       private Admin(String userName, String pohne, String password)
         {
