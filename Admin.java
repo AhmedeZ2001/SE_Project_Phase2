@@ -1,9 +1,13 @@
-
-import java.util.ArrayList;
-
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package se;
+
+/**
+ *
+ * @author Ahmed Abdelnaser
  */
 
 /**
@@ -12,65 +16,75 @@ import java.util.ArrayList;
  */
 public class Admin extends User {
     
+    
     private static Admin admin = null;
-    
-    ArrayList<Clint> clints_list = new ArrayList<Clint>;
-    ArrayList<Driver> drivers_list = new ArrayList<Driver>;
-    ArrayList<Driver> pindingDrivers = new ArrayList<Driver>;
-    
-    
-    private Admin(String user_name, String pass)
-    {
-        username = user_name;
-        password = pass;
-    }
+
+      private Admin(String userName, String pohne, String password)
+        {
+            super(userName, pohne, password);
+        }
     
     public static Admin getInstance ()
     {
         if (admin == null)
-            admin = new Admin ("Omar", "123456789");
+             admin = new Admin ("admin", "0123456789","admin");
         return admin;
     }
     
     
-    public void verify (Driver driver)
+    public void verify (driver d)
     {
-        if (driver.getLincees())
-            System.out.println("You have been added!!"); ///*****////
-        else
-            System.out.println("Failed!! Wrong lincees");
+        for (int i =0; i < dataBase.getInstance().pendingDrivers.size(); i++)
+        {
+              if (d.getLincese() != "")
+              { 
+                  dataBase.getInstance().drivers_List.add(d);
+                  System.out.println("You have been added!");
+                  dataBase.getInstance().pendingDrivers.remove(i);
+              }
+              
+            else
+                System.out.println("Failed! Wrong license");  
+        }
+     
     }
     
-    public void suspend (Users user)
+    public void suspend (User user)
     {
-        if (user.getType == "driver")
+        if (user instanceof driver)
         {
-            for (int i = 0; i < drivers_list.size(); i++)
-            {
-                if (user.username == drivers_list.get(i)) ///*****////
-                    drivers_list.remove(i);
-            }
+            for (int i = 0; i < dataBase.getInstance().drivers_List.size(); i++)
+                {
+                    if (dataBase.getInstance().drivers_List.get(i).getUserName().equals(user.userName))
+                    {   
+                        dataBase.getInstance().drivers_List.remove(i);
+                        System.out.println("Driver has been removed.");
+                    }
+                }
         }
-        else 
+        else if (user instanceof client)
         {
-            for (int i = 0; i < clints_list.size(); i++)
-            {
-                if (user.username == clints_list.get(i))
-                {   clints_list.remove(i);
-                    System.out.println("User has been removed");
-                }   
-            }
-             System.out.println("User not found");
+            for (int i = 0; i < dataBase.getInstance().clients_List.size(); i++)
+                {
+                    if (user.userName.equals(dataBase.getInstance().clients_List.get(i).getUserName()))
+                    {   
+                        dataBase.getInstance().clients_List.remove(i);
+                        System.out.println("Client has been removed.");
+                    }
+                }            
         }
+        else
+            System.out.println("User not found");
     }
+    
     
     public Boolean validateDetiles(String userName, String pass)
     {
-         for (int i = 0; i < drivers_list.size(); i++)
+         for (int i = 0; i < dataBase.getInstance().drivers_List.size(); i++)
             {
-                if (userName == drivers_list.get(i).username) 
+                if (userName.equals(dataBase.getInstance().drivers_List.get(i).userName)) 
                 {
-                    if (pass == drivers_list.get(i).password)
+                    if (pass.equals(dataBase.getInstance().drivers_List.get(i).password))
                         return true;
                     else
                     { 
@@ -80,11 +94,11 @@ public class Admin extends User {
                 }
             }
         
-         for (int i = 0; i < clints_list.size(); i++)
+         for (int i = 0; i < dataBase.getInstance().clients_List.size(); i++)
          {
-             if (userName == clints_list.get(i).username) 
+             if (userName.equals(dataBase.getInstance().clients_List.get(i).userName)) 
                 {
-                    if (pass == clints_list.get(i).password)
+                    if (pass.equals(dataBase.getInstance().clients_List.get(i).password))
                         return true;
                     else
                     { 
