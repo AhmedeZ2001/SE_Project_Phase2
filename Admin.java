@@ -6,18 +6,15 @@
 package se;
 
 /**
- *
- * @author Ahmed Abdelnaser
- */
-
-/**
- *
- * @author omarb
+@author Ahmed Abdelnaser
+ * @author Omar Abdallah 20190771
+ * @author Abdallah Mohamed 20190327
+ * @author Nour Hosny 20190589
  */
 public class Admin extends User {
     
     
-    private static Admin admin = null;//Singleton
+    private static Admin admin = null;
 
       private Admin(String userName, String pohne, String password)
         {
@@ -39,11 +36,10 @@ public class Admin extends User {
               if (d.getLincese() != "")
               { 
                   dataBase.getInstance().drivers_List.add(d);
-                  System.out.println("You have been added!");
+                  System.out.println("You have been added to our drivers list!");
                   dataBase.getInstance().pendingDrivers.remove(i);
               }
-              
-            else
+             else
                 System.out.println("Failed! Wrong license");  
         }
      
@@ -58,7 +54,8 @@ public class Admin extends User {
                     if (dataBase.getInstance().drivers_List.get(i).getUserName().equals(user.userName))
                     {   
                         dataBase.getInstance().drivers_List.remove(i);
-                        System.out.println("Driver has been removed.");
+                        dataBase.getInstance().SusspendedList.add(user);
+                        System.out.println("Driver has been Suspended.");
                     }
                 }
         }
@@ -69,7 +66,8 @@ public class Admin extends User {
                     if (user.userName.equals(dataBase.getInstance().clients_List.get(i).getUserName()))
                     {   
                         dataBase.getInstance().clients_List.remove(i);
-                        System.out.println("Client has been removed.");
+                        dataBase.getInstance().SusspendedList.add(user);
+                        System.out.println("Client has been Suspended.");
                     }
                 }            
         }
