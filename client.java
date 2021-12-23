@@ -6,8 +6,10 @@
 package se;
 
 /**
- *
  * @author Ahmed Abdelnaser
+ * @author Omar Abdallah 20190771
+ * @author Abdallah Mohamed 20190327
+ * @author Nour Hosny 20190589
  */
 public class client extends User implements Register, Login {
 
@@ -16,22 +18,21 @@ public class client extends User implements Register, Login {
      
 
     }
+    public boolean hasRight(){
+        for(int i=0 ; i< dataBase.getInstance().clients_List.size() ;i++){
+            if(dataBase.getInstance().clients_List.get(i).getUserName().equals(this.userName))
+                return true;
+        }
+        return false;
+    }
     
     public void request (String src, String des)
     {
-        //check if client exist in client list
-        boolean x = true;
-        for (int i =0 ; i< dataBase.getInstance().clients_List.size(); i++)
-        {
-            if (dataBase.getInstance().clients_List.get(i).getUserName().equals(this.userName))
-            {
-                x = false;
-                ride r = new ride (src, des);
-                dataBase.getInstance().clients_List.remove(i);
-            
-            }
+        if(this.hasRight()){
+            ride r = new ride (src, des);
+            dataBase.getInstance().clients_List.remove(this);
         }
-        if(x)
+        else
         {
             System.out.println("You're suspended or not registered");
         }
@@ -46,15 +47,16 @@ public class client extends User implements Register, Login {
         }
         }
         dataBase.getInstance().clients_List.add(this);
+        System.out.println("Client Registered Successfully");
         return true;
     }
 
     @Override
     public User login(String name, String pass) {
-     //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-     
+  
         if (Admin.getInstance().validateDetiles(name, pass))
              {
+                 System.out.println("Client Login Successfully");
                  return this;
              }
         else
@@ -86,4 +88,3 @@ public class client extends User implements Register, Login {
 
     
 }
-    
