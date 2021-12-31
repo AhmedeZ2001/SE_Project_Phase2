@@ -12,29 +12,45 @@ import java.util.Scanner;
  *
  * @author Ahmed Abdelnaser
  */
-public class driver extends User implements Register, Login {
-     HashMap<String, Integer> rating_List = new HashMap<>();
+
+public class driver extends User implements Register, Login 
+{
+    HashMap<String, Integer> rating_List = new HashMap<>();
     String Id;
     String license;
-    //ride r;
-    double avgRate = 0;
+    float avgRate = 0;
     int sumRate = 0;
-    dataBase MyDB;
-    public driver(String natinalId, String license, String userName, String pohne, String password, double avgRate) {
-        super(userName, pohne, password);
-        this.Id =Id;
-        this.license = license;
-        this.avgRate=avgRate;
-        //dataBase.getInstance().drivers_List.add(this);
-    }
-   
- public void addFavArea(String d){
-    dataBase.getInstance().favArea_List.add(d);
-  //  dataBase.getInstance().DriversWithFav.add(this);
-   }
 
     
-   public void update() {
+    public driver(String natinalId, String license, String userName, String pohne, String password) 
+    {
+        super(userName, pohne, password);
+        this.Id =Id;
+        this.license = license;  
+    }
+   
+ public void addFavArea(String d)
+ {
+    dataBase.getInstance().favArea_List.add(d);
+
+ }
+
+    public String getId() {
+        return Id;
+    }
+    public String getLincese() {
+        return license;
+    }
+    public void setNatinalId(String natinalId) {
+        this.Id = natinalId;
+    }
+    public void setLincese(String lincese) {
+        this.license = lincese;
+    }
+
+        
+   public void update()
+   {
        int offer; 
       System.out.println("Hey " + this.getUserName() + " a client has requested a trip in your fav area");
       System.out.println("Enter your offer"); 
@@ -42,61 +58,49 @@ public class driver extends User implements Register, Login {
       offer = n.nextInt();
       System.out.println(  "Here's your offer \n" + "\n price: " + offer + "\n Name: " + this.getUserName() + "\n Ph: " + this.getPohne()); 
    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public String getLincese() {
-        return license;
-    }
-
-    public void setNatinalId(String natinalId) {
-        this.Id = natinalId;
-    }
-
-    public void setLincese(String lincese) {
-        this.license = lincese;
-    }
-
+   
     @Override
-    public boolean Register() {
-        for(int i=0 ; i<dataBase.getInstance().drivers_List.size();i++){
-            if(dataBase.getInstance().drivers_List.get(i).userName.equals(this.userName) ){
+    public boolean Register()  //// API
+    {
+        for(int i=0 ; i<dataBase.getInstance().drivers_List.size();i++)
+        {
+            if(dataBase.getInstance().drivers_List.get(i).userName.equals(this.userName))
+            {
                 System.out.println("username is taken");
                 return false ;
+            }
         }
-        }
+        
         dataBase.getInstance().pendingDrivers.add(this);
         Admin.getInstance().verify(this);
         return true;
     }
 
     @Override
-    public User login(String name, String pass) {
-
-
+    public User login(String name, String pass)
+    {
         if (Admin.getInstance().validateDetiles(name, pass))
-             {
                  return this;
-             }
         else
-             return null;    }
+             return null;    
+    }
 
     
-    public void setAvg(double avgRat)
+    
+    public void setAvg(float avg_rate)
     {
-        this.avgRate = avgRate + avgRat;
+        this.avgRate = avg_rate; 
     }
     
-    public void getAvgRate()
+    public void printRate()
     {
-         rating_List.forEach((r, k) ->
-         {
-             sumRate += rating_List.get(r);    
-         });
-         
-         avgRate = ((double) sumRate) / rating_List.size();
-         System.out.println("avgRate: " + avgRate);
+         for (String i : rating_List.keySet()) 
+      System.out.println(i +" " + rating_List.get(i));
+    
     }
+    
+     public float getAvgRate()
+     {
+         return avgRate;
+     }
 }
