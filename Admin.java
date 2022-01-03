@@ -15,10 +15,14 @@ public class Admin extends User {
     
     
     private static Admin admin = null;
+    public ArrayList <Events> EventsHistory = new ArrayList<>();
+    private ArrayList <String> discountAreas = new ArrayList<String>();
 
       private Admin(String userName, String pohne, String password)
         {
             super(userName, pohne, password);
+            discountAreas.add("cairo");
+            discountAreas.add("elshobak");
         }
     
     public static Admin getInstance ()
@@ -76,36 +80,45 @@ public class Admin extends User {
     }
     
     
-    public Boolean validateDetiles(String userName, String pass)
+    public client validateDetilesClient(String userName, String pass)
     {
-         for (int i = 0; i < dataBase.getInstance().drivers_List.size(); i++)
-            {
-                if (userName.equals(dataBase.getInstance().drivers_List.get(i).userName)) 
-                {
-                    if (pass.equals(dataBase.getInstance().drivers_List.get(i).password))
-                        return true;
-                    else
-                    { 
-                        System.out.println("wrong password");  
-                        return false;
-                    }
-                }
-            }
         
          for (int i = 0; i < dataBase.getInstance().clients_List.size(); i++)
          {
              if (userName.equals(dataBase.getInstance().clients_List.get(i).userName)) 
                 {
                     if (pass.equals(dataBase.getInstance().clients_List.get(i).password))
-                        return true;
+                        return dataBase.getInstance().clients_List.get(i);
                     else
                     { 
                         System.out.println("wrong password");  
-                        return false;
+                        return null;
                     }
                 }
          }
          System.out.println("User not found");  
-         return false;
+         return null;
+    }
+    public driver validateDetilesDriver(String userName, String pass)
+    {
+         for (int i = 0; i < dataBase.getInstance().drivers_List.size(); i++)
+            {
+                if (userName.equals(dataBase.getInstance().drivers_List.get(i).userName)) 
+                {
+                    if (pass.equals(dataBase.getInstance().drivers_List.get(i).password))
+                        return dataBase.getInstance().drivers_List.get(i);
+                    else
+                    { 
+                        System.out.println("wrong password");  
+                        return null;
+                    }
+                }
+            }
+         System.out.println("User not found");  
+         return null;
+    }
+    public ArrayList<String> getAres()
+    {
+        return discountAreas;
     }
 }
