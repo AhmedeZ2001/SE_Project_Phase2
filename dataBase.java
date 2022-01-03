@@ -11,20 +11,36 @@ import java.util.HashMap;
  * @author Ahmed Abdelnaser
  */
 public class dataBase {
-    private static dataBase MyDB=null;
-    ArrayList<client> clients_List=new ArrayList<>();
-    ArrayList<driver> drivers_List=new ArrayList<>();
-    ArrayList<driver> pendingDrivers=new ArrayList<>();
+
+    private static dataBase MyDB = null;
+    ArrayList<client> clients_List = new ArrayList<>();
+    ArrayList<driver> drivers_List = new ArrayList<>();
+    ArrayList<driver> pendingDrivers = new ArrayList<>();
     ArrayList<User> SusspendedList = new ArrayList<>();
-        
-    ArrayList<String> favArea_List=new ArrayList<>();
-   
-    private dataBase(){};
-     public static dataBase getInstance ()
-    {
-        if (MyDB == null)
-            MyDB = new dataBase ();
+    ArrayList<String> Holidays = new ArrayList<>();
+    ArrayList<String> clientHistory = new ArrayList<>();
+
+    private String currentDay = "sunday";
+
+    public void setDay(String day) {
+        currentDay = day;
+    }
+
+    public String getDay() {
+        return currentDay;
+    }
+
+    private dataBase() {
+
+        Holidays.add("Friday");
+        Holidays.add("Monday");
+    }
+
+    public static dataBase getInstance() {
+        if (MyDB == null) {
+            MyDB = new dataBase();
+        }
         return MyDB;
     }
-     
+
 }
